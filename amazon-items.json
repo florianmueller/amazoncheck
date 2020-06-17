@@ -1,0 +1,28 @@
+{
+  "products": [
+      {
+        "name": "säge",
+        "id": "B01KWJMTIO"
+      },
+      {
+        "name": "PS5 Konsole",
+        "id": "B08B42QFNG"
+      },
+      {
+        "name": "PS5 Digital Konsole",
+        "id": "B08B42QX93"
+      },
+      {
+        "name": "PS5 Controller",
+        "id": "B07SFHCTZ9"
+      },
+      {
+        "name": "PS5 Headset",
+        "id": "B087VMFKJH"
+      },
+      {
+        "name": "PS5 Ladestation",
+        "id": "B087VMRWMC"
+      }
+    ]
+}
