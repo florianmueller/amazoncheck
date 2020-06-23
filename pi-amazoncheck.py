@@ -3,10 +3,8 @@
 from lxml import html
 import requests
 from time import sleep
-#import time
 import smtplib
 from selenium import webdriver
-#from selenium.webdriver.common.keys import Keys
 import http.client
 import urllib
 import json
@@ -17,6 +15,10 @@ receiver_email_id = "YOURDESIREDMAIL@mail.com"
 pushoverToken = ''
 pushoverUser = ''
 pushoverDevice = ''
+mailUsername = ''
+mailPasswd = ''
+mailSMTPserver = 'smtp.gmail.com'
+mailPort = 587
 #CHROME WEBDRIVER LOCATION, on MAC OR WIN OR LINUX DIFFERENTLY
 #mac
 #browser = webdriver.Chrome('/Users/yourusername/Downloads/chromedriver')
