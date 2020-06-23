@@ -2,7 +2,7 @@
   "products": [
       {
         "name": "säge",
-        "id": "B01KWJMTIO"
+        "id": "B072J25TPG"
       },
       {
         "name": "PS5 Konsole",
@@ -13,12 +13,20 @@
         "id": "B08B42QX93"
       },
       {
-        "name": "PS5 Controller",
+        "name": "DualSense Controller",
         "id": "B07SFHCTZ9"
       },
       {
-        "name": "PS5 Headset",
+        "name": "PULSE 3D Wireless Headset",
         "id": "B087VMFKJH"
+      },
+      {
+        "name": "PS5 Remote Fernbedienung",
+        "id": "B08B4CFPGM"
+      },
+      {
+        "name": "PS5 HD Kamera",
+        "id": "B087VHTFSG"
       },
       {
         "name": "PS5 Ladestation",
