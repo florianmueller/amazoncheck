@@ -162,7 +162,7 @@ def ReadAsin(Asin, productname, url):
 
 
 # LOAD CONFIG FILE & RUN FOR EACH ITEM
-with open('amazon-items.json') as data_file:
+with open('./amazon-items.json') as data_file:
     data = json.load(data_file)
     for i in data['products']:
         #DEBUG log if items parsed
