@@ -51,46 +51,34 @@ def check(url):
 
 
 
-
-#def check(url):
-#    browser.get(url)
-#    sleep(3)
-#
-#    RAW_AVAILABILITY = browser.find_element_by_xpath('//*[@id="availability"]/span').text
-#    AVAILABILITY = ''.join(RAW_AVAILABILITY).strip() if RAW_AVAILABILITY else None
-#    return AVAILABILITY
-
-
-def sendMail(ans, product):
-    GMAIL_USERNAME = "YOUR_GMAIL_ID"
-    GMAIL_PASSWORD = "YOUR_GMAIL_PASSWORD"
-
-    recipient = receiver_email_id
-    body_of_email = ans
+def sendMail(ans, product, url, productname):
+    recipient = receiverMailAdress
+    body_of_email = url + ' -> ' + ans
     email_subject = product + ' product availability'
 
     # creates SMTP session
-    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s = smtplib.SMTP(mailSMTPserver, mailPort)
 
     # start TLS for security
     s.starttls()
 
     # Authentication
-    s.login(GMAIL_USERNAME, GMAIL_PASSWORD)
+    s.login(mailUsername, mailPasswd)
 
     # message to be sent
-    headers = "\r\n".join(["from: " + GMAIL_USERNAME,
+    headers = "\r\n".join(["from: " + mailUsername,
                         "subject: " + email_subject,
                         "to: " + recipient,
                         "mime-version: 1.0",
                         "content-type: text/html"])
 
     content = headers + "\r\n\r\n" + body_of_email
-    s.sendmail(GMAIL_USERNAME, recipient, content)
+    s.sendmail(mailUsername, recipient, content)
     s.quit()
 
+    
 # pushover
-def sendPush(ans, product):
+def sendPush(ans, product, url, productname):
     if pushoverToken :
         def pushover (sensordata_entity, pushover_title,pushover_priority):
             conn = http.client.HTTPSConnection("api.pushover.net:443")
@@ -100,19 +88,20 @@ def sendPush(ans, product):
                 "user": pushoverUser,
                 "device": pushoverDevice,
                 "title": pushover_title,
+                "url": url,
                 "message": pushover_message,
                 "priority": pushover_priority,
                 "sound": "intermission",
               }), { "Content-type": "application/x-www-form-urlencoded" })
             conn.getresponse()
         pushover_message = ans
-        pushover_priority = 0
+        pushover_priority = 1
         pushover_title = "Amazon: " + productname
         pushover(pushover_message, pushover_title, pushover_priority)
 
 
-def ReadAsin():
-    print ("Processing: "+url)
+def ReadAsin(Asin, productname, url):
+#    print ("Processing: "+url)
     ans = check(url)
     #debug
     #print (AVAILABILITY)
@@ -160,14 +149,16 @@ def ReadAsin():
         'Auf Lager',
         'Auf Lager.',
         'In stock.']
-    print(ans)
+    print(productname +'-'+ Asin +'-'+ ans, end ="-")
     if ans in arr:
+        print('green')
         #in case product available
         #notify user with mail and push
-#        sendMail(ans, Asin)
+        sendMail(ans, Asin, url, productname)
         #send pushover
-        sendPush(ans, Asin)
-
+        sendPush(ans, Asin, url, productname)
+    else:
+        print('red')
 
 
 # LOAD CONFIG FILE & RUN FOR EACH ITEM
@@ -175,11 +166,9 @@ with open('amazon-items.json') as data_file:
     data = json.load(data_file)
     for i in data['products']:
         #DEBUG log if items parsed
-        print (i['name'])
-        print (i['id'])
     # Asin Id is the product Id which
     # needs to be provided by the user in items.json
         Asin = i['id']
         productname = i['name']
         url = "http://www.amazon.de/dp/" + Asin
-        ReadAsin()
+        ReadAsin(Asin, productname, url)
