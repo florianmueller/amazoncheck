@@ -1,4 +1,4 @@
-lxml==4.5.1
+lxml==4.6.5
 pysftp==0.2.9
 PyVirtualDisplay==1.3.2
 requests==2.22.0
